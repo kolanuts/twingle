@@ -66,6 +66,7 @@
             100% { transform: rotate(360deg); }
         }
     </style>
+	
 </head>
 <body>
 <div id="twingleBodyWrapper">
@@ -127,8 +128,21 @@
             var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0];
             g.type="text/javascript"; g.async=true; g.defer=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
         })();
+	</script>
+	<script type="text/javascript">
+		window.addEventListener('mercury:load', setupTwingle); //sq load event
+function setupTwingle() {
+	$('.twingle-form').each(function(){
+		$el = $(this);
+		if($el.data('loaded')==true) return;
+		$el.data('loaded', true);
+		var u= $el.data('u');
+		var id = '_' + Math.random().toString(36).substr(2, 9);
+		var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+		$el.html('<div id="twingle-public-embed-' + id + '"></div>');
+		g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'/'+id; s.parentNode.insertBefore(g,s);
+	});		
+}
     </script>
-    <noscript><p><img src="//statistic.twingle.de/piwik.php?idsite=7" style="border:0;" alt="" /></p></noscript>
-    
 </body>
 </html>
